@@ -1,21 +1,23 @@
 const passport =require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const keys =require('../config/key')
+const keys =require('../config/key');
 const mongoose = require('mongoose');
 //users 모델(컬렉션) 가져옴
 const User = mongoose.model('users');
 
+//setting id as cookie in user’s browser
 passport.serializeUser((user,done) => {
     //googleId 랑 다른거임
     done(null,user.id);
 });
+
+// getting id from the cookie
 //done은 성공했을때 실행할 함수 
 passport.deserializeUser((id,done) => {
     User.findById(id)
     .then(user =>{
         done(null,user);
     });
-
 });
 
 //새 객체생성
