@@ -36,8 +36,7 @@ passport.use(new GoogleStrategy(
         }                
         //save 해야 db에 저장
         const user = await new User({googleId:profile.id}).save()
-        done(null,user);
-        
+        done(null,user);        
         }
     )
 );
