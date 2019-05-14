@@ -28,24 +28,17 @@ passport.use(new GoogleStrategy(
         callbackURL :'/auth/google/callback',
         proxy : true
     },
-    (accessToken,refreshToken,profile,done) =>{
+    async (accessToken,refreshToken,profile,done) =>{
         //promise ,
-        User.findOne({googleId:profile.id})
-        .then((existingUser) =>{
-            if(existingUser){
-                // id 가 있으면 추가안함
-                //done (errObj,user)
-                done(null,existingUser);
-                console.log(existingUser + "is already exist");
-
-            }else{                
-                //save 해야 db에 저장
-                new User({googleId:profile.id})
-                .save()
-                .then(user => done(null,user))
-            }
-
-        })
-    })
+        const existingUser = await User.findOne({googleId:profile.id})
+        if(existingUser){
+            return done(null,existingUser);
+        }                
+        //save 해야 db에 저장
+        const user = await new User({googleId:profile.id}).save()
+        done(null,user);
+        
+        }
+    )
 );
 
