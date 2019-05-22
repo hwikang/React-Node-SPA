@@ -5,6 +5,7 @@
 export default function(state ={} , action){
     //switch문 if
             //변수명
+    console.log("action =",action);
     switch(action.type){
          //조건
 

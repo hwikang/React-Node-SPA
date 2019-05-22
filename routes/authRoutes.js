@@ -11,7 +11,6 @@ module.exports = (app) =>{
         //incomming request / outgoing response
         //session에있는걸 passport가 접근함 
         res.send(req.session);
-
     })
     app.get('/api/logout', (req,res) =>{
         //cookie 죽임
